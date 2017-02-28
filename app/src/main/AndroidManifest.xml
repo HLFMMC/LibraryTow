@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar" >
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.mmc.library.ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
@@ -18,10 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.LoginActivity"></activity>
-        <activity android:name=".ui.activity.RegisterActivity"></activity>
-        <activity android:name=".ui.activity.BookInfoActivity"></activity>
-        <activity android:name=".ui.activity.PushBookActivity"></activity>
+        <activity android:name="com.mmc.library.ui.activity.LoginActivity"></activity>
+        <activity android:name="com.mmc.library.ui.activity.RegisterActivity"></activity>
+        <activity android:name="com.mmc.library.ui.activity.BookInfoActivity"></activity>
+        <activity android:name="com.mmc.library.ui.activity.PushBookActivity"></activity>
     </application>
 
 </manifest>
