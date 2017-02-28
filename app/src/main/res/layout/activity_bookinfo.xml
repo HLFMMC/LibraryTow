@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/include_navi"></include>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--封面及图书名称-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="10dp"
+            >
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="80dp"
+                android:id="@+id/book_cover"
+                android:src="@drawable/nocover" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bookName"
+                    android:text="图书名称"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:maxLines="1"
+                    android:text="作者：Lucas"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!--图书详细-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bookDesc"
+                android:text="图书desc"/>
+        </LinearLayout>
+
+        <!--购买-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="32dp"
+                android:text="加入购物车"
+                android:background="@color/color_bottom_text_press"
+                android:textColor="@color/base_color_text_white"
+                android:id="@+id/button"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:text="立即购买"
+                android:layout_marginRight="10dp"
+                android:id="@+id/button2"
+                android:background="@color/color_bottom_text_press"
+                android:textColor="@color/base_color_text_white"
+                android:layout_alignBottom="@+id/button"
+                android:layout_toLeftOf="@+id/button"
+                android:layout_toStartOf="@+id/button" />
+        </RelativeLayout>
+
+        <!--评论-->
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

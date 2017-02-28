@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".ui.activity.LoginActivity"></activity>
         <activity android:name=".ui.activity.RegisterActivity"></activity>
+        <activity android:name=".ui.activity.BookInfoActivity"></activity>
+        <activity android:name=".ui.activity.PushBookActivity"></activity>
     </application>
 
 </manifest>
