@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mmc.library.R;
 import com.mmc.library.ui.MainActivity;
@@ -60,17 +61,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String account = edt_account.getText().toString().trim();
         String password = edt_password.getText().toString().trim();
 
-        if(account.equals("")) {
-        }
-        if(password.equals("")) {
-
-        }
-
-        //登录成功后跳到主页
+//        if(account.equals("")) {
+//           Toast.makeText(this,"账号错误！",Toast.LENGTH_LONG).show();
+//        }else if(password.equals("")) {
+//           Toast.makeText(this,"密码错误！",Toast.LENGTH_LONG).show();
+//        } else
         if(loginRun(account,password)) {
+            //登录成功后跳到主页
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(intent);
             this.finish();
+        } else{
+            Toast.makeText(this, "注册失败！", Toast.LENGTH_LONG).show();
         }
 
     }

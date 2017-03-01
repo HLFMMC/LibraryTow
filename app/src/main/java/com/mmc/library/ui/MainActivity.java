@@ -3,7 +3,6 @@ package com.mmc.library.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
@@ -21,7 +20,6 @@ import com.mmc.library.adapter.BookAdapter;
 import com.mmc.library.ui.activity.BookInfoActivity;
 import com.mmc.library.ui.activity.LoginActivity;
 import com.mmc.library.ui.activity.PushBookActivity;
-import com.mmc.library.ui.activity.RegisterActivity;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -119,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.login) {
             Intent intent = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
+
         }
 
         return super.onOptionsItemSelected(item);

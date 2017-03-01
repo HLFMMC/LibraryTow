@@ -87,6 +87,32 @@
                 android:layout_toLeftOf="@+id/button"
                 android:layout_toStartOf="@+id/button" />
         </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/editText"
+                android:background="@drawable/shapeline"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="回复"
+                android:id="@+id/btn_replay"
+                android:background="@color/color_bottom_text_press"
+                android:textColor="@color/base_color_text_white"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
 
         <!--评论-->
         <LinearLayout
@@ -96,7 +122,7 @@
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/listView"
+                android:id="@+id/bookReplay"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
 

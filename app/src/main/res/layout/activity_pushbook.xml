@@ -26,6 +26,7 @@
                 android:layout_height="40dp"
                 android:singleLine="true"
                 android:background="@drawable/shapeline"
+                android:id="@+id/edt_bookName"
                 android:maxLines="1" />
         </LinearLayout>
         <RelativeLayout
@@ -47,6 +48,7 @@
                 android:layout_height="120dp"
                 android:maxLines="5"
                 android:gravity="top"
+                android:id="@+id/edt_bookDesc"
                 android:background="@drawable/shapeline"
                 android:layout_toRightOf="@+id/bookDesc"
                 android:layout_toEndOf="@+id/bookDesc" />
@@ -77,12 +79,12 @@
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/book_cover"
                 android:layout_toEndOf="@+id/book_cover"
-                android:id="@+id/editText" />
+                android:id="@+id/edt_bookPic" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="选择文件"
-                android:id="@+id/button3"
+                android:id="@+id/btn_File"
                 android:background="#FFB33E"
                 android:textColor="@color/base_color_text_white"
                 android:layout_gravity="right"
@@ -113,7 +115,7 @@
                 android:maxLines="1"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/book_price"
-                android:id="@+id/book_price_input"
+                android:id="@+id/edt_bookPrice"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
@@ -132,6 +134,7 @@
                 android:textColor="@color/base_color_text_white"
                 android:background="#FFB33E"
                 android:layout_alignParentTop="true"
+                android:id="@+id/btn_Push"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </LinearLayout>
