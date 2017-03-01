@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
@@ -27,8 +27,34 @@
                 android:singleLine="true"
                 android:background="@drawable/shapeline"
                 android:id="@+id/edt_bookName"
-                android:maxLines="1" />
-        </LinearLayout>
+                android:maxLines="1"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/bookName"
+                android:layout_toRightOf="@+id/bookName" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="图书类别："
+                android:textSize="18dp"
+                android:textColor="@color/base_color_text_white"
+                android:id="@+id/bookCategory"/>
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner2"
+                android:background="@drawable/shapeline"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/bookCategory"
+                android:layout_toEndOf="@+id/bookCategory" />
+
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
