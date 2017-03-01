@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mmc.library.R;
 import com.mmc.library.bean.Book;
 
@@ -59,7 +60,12 @@ public class BookAdapter extends BaseAdapter {
         } else {
             holder = (Holder)convertView.getTag();
         }
-        holder.bookCover.setImageResource(R.drawable.nocover);
+
+        if(mList.get(position).getPic()!=""){
+            Glide.with(mContext).load(mList.get(position).getPic()).centerCrop().placeholder(R.drawable.nocover).crossFade().into(holder.bookCover);
+        }else{
+            holder.bookCover.setImageResource(R.drawable.nocover);
+        }
         holder.tvBookName.setText(mList.get(position).getName());
         holder.tvBooKDesc.setText(mList.get(position).getDesc());
         holder.tvAuthor.setText(mList.get(position).getAutor());

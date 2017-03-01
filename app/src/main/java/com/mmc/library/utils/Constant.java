@@ -5,5 +5,5 @@ package com.mmc.library.utils;
  */
 
 public interface Constant {
-    String API_ADDRESS = "http://192.168.0.101:8000";
+    String API_ADDRESS = "http://139.199.160.234:8000";
 }

@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BookAdapter adapter;
     private LinearLayout categoryLy;
     private Spinner category;
-
     private List<Book> dataList;
+
 
     LinkedList<HashMap<String,String>> list;
     private ArrayAdapter<String> categoryAdapter;
@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         categoryLy = (LinearLayout) findViewById(R.id.categoryLy);
         category = (Spinner) findViewById(R.id.category);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-
         setSupportActionBar(toolbar);
         fab.setOnClickListener(this);
     }
@@ -75,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("mylog info","----->info--->"+position);
+                Intent intent=new Intent(MainActivity.this,BookInfoActivity.class);
+                intent.putExtra("bookId",dataList.get(position).getId());
+                startActivity(intent);
             }
         });
     }

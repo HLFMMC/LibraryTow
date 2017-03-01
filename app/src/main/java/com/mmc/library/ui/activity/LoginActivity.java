@@ -3,6 +3,7 @@ package com.mmc.library.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mmc.library.R;
+import com.mmc.library.bean.User;
 import com.mmc.library.ui.MainActivity;
 
 /**
@@ -66,11 +68,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //        }else if(password.equals("")) {
 //           Toast.makeText(this,"密码错误！",Toast.LENGTH_LONG).show();
 //        } else
+
+
+
         if(loginRun(account,password)) {
             //登录成功后跳到主页
-            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-            startActivity(intent);
-            this.finish();
+           finish();
         } else{
             Toast.makeText(this, "注册失败！", Toast.LENGTH_LONG).show();
         }
@@ -81,6 +84,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         boolean flag = false;
         /*登录的方法*/
 //        return  flag;
+
+        Log.e("mylog...","---->loginrun");
+        User user=new User();
+        user.setUsername(account);
+        user.setPassword(password);
+        try {
+            User resUser= user.login();
+            System.out.print("user--->"+resUser.toString());
+        }catch (Exception e){
+            Log.e("mylog-","---->"+e.toString());
+        }
         return true;
     }
     /*注册*/

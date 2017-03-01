@@ -12,7 +12,7 @@ import com.mmc.library.R;
 /**
  * Created by HM on 2017/2/28.
  */
-public class PushBookActivity extends AppCompatActivity implements View.OnClickListener {
+public class PushBookActivity extends AppCompatActivity  {
     private RelativeLayout btn_back;
     private Button btn_File;
     private Button btn_Push;
@@ -27,38 +27,38 @@ public class PushBookActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pushbook);
-        init();
+      //  init();
     }
 
     private  void init() {
-        btn_back = (RelativeLayout) findViewById(R.id.btn_back);
-        btn_File = (Button) findViewById(R.id.btn_File);
-        btn_Push = (Button) findViewById(R.id.btn_Push);
+//        btn_back = (RelativeLayout) findViewById(R.id.btn_back);
+//        btn_File = (Button) findViewById(R.id.btn_File);
+//        btn_Push = (Button) findViewById(R.id.btn_Push);
+//
+//        edt_bookName = (EditText) findViewById(R.id.edt_bookName);
+//        edt_bookDesc = (EditText) findViewById(R.id.edt_bookDesc);
+//        edt_bookPic = (EditText) findViewById(R.id.edt_bookPic);
+//        edt_bookPrice = (EditText) findViewById(R.id.edt_bookPrice);
 
-        edt_bookName = (EditText) findViewById(R.id.edt_bookName);
-        edt_bookDesc = (EditText) findViewById(R.id.edt_bookDesc);
-        edt_bookPic = (EditText) findViewById(R.id.edt_bookPic);
-        edt_bookPrice = (EditText) findViewById(R.id.edt_bookPrice);
-
-        btn_back.setOnClickListener(this);
-        btn_File.setOnClickListener(this);
-        btn_Push.setOnClickListener(this);
+//        btn_back.setOnClickListener(this);
+//        btn_File.setOnClickListener(this);
+//        btn_Push.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_back :
-                finish();
-                break;
-            case R.id.btn_File:
-                checkFile();
-                break;
-            case R.id.btn_Push:
-                bookPush();
-                break;
-        }
-    }
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.btn_back :
+//                finish();
+//                break;
+////            case R.id.btn_File:
+////                checkFile();
+////                break;
+////            case R.id.btn_Push:
+////                bookPush();
+////                break;
+//        }
+//    }
 
     /**
      * 选择文件
