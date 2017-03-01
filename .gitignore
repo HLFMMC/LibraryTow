@@ -5,3 +5,8 @@
 .DS_Store
 /build
 /captures
+/.idea/*
+/LibraryTow.iml
+/app/app.iml
+/build.gradle
+/gradle/wrapper/gradle-wrapper.properties
