@@ -2,9 +2,12 @@ package com.mmc.library.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
@@ -15,14 +18,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mmc.library.R;
 import com.mmc.library.adapter.BookAdapter;
+import com.mmc.library.bean.Book;
 import com.mmc.library.ui.activity.BookInfoActivity;
 import com.mmc.library.ui.activity.LoginActivity;
 import com.mmc.library.ui.activity.PushBookActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
     private  Toolbar toolbar;
@@ -32,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout categoryLy;
     private Spinner category;
 
+    private List<Book> dataList;
+
     LinkedList<HashMap<String,String>> list;
     private ArrayAdapter<String> categoryAdapter;
 
@@ -40,59 +51,82 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        initData();
+        new Thread(networtTask).start();
     }
 
     private void init() {
-
-        list = new LinkedList<>();
-        for (int i = 0;i<10;i++) {
-            HashMap<String,String> map = new HashMap<>();
-            map.put("bookName","bookName"+i);
-            map.put("bookDesc","bookDesc"+i);
-            list.add(map);
-        }
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         bookList = (ListView) findViewById(R.id.bookList);
         categoryLy = (LinearLayout) findViewById(R.id.categoryLy);
         category = (Spinner) findViewById(R.id.category);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        LinkedList<String> arry = new LinkedList<>();
-        arry.add("北京");
-        arry.add("上海");
-        arry.add("广州");
-        arry.add("深圳");
-        categoryAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,arry);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        category.setAdapter(categoryAdapter);
 
         setSupportActionBar(toolbar);
         fab.setOnClickListener(this);
-        adapter = new BookAdapter(MainActivity.this,list);
+    }
+
+
+    public void initData(){
+        dataList=new ArrayList<Book>();
+        adapter=new BookAdapter(MainActivity.this,dataList);
         bookList.setAdapter(adapter);
-        bookList.setOnTouchListener(new View.OnTouchListener() {
+        bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-//                        categoryLy.setVisibility(View.GONE);
-                        fab.hide();
-                        break;
-                    case MotionEvent.ACTION_UP:
-//                        categoryLy.setVisibility(View.VISIBLE);
-                        fab.show();
-                        break;
-                }
-                return false;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("mylog info","----->info--->"+position);
             }
         });
-        bookList.setOnItemClickListener(this);
     }
+
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle data=msg.getData();
+            String str=data.getString("datalist");
+
+            List<Book> res=new Gson().fromJson(str,new TypeToken<ArrayList<Book>>(){}.getType());
+            if(res.size()>0){
+                dataList.clear();
+            }
+            dataList.addAll(res);
+            System.out.println("datalist size.."+dataList.size());
+            for (int i=0;i<dataList.size();i++){
+                System.out.println(dataList.get(i).toString());
+            }
+            adapter.notifyDataSetChanged();
+        }
+    };
+
+    Runnable networtTask=new Runnable() {
+        Message msg = new Message();
+        Bundle data = new Bundle();
+        String res="";
+        @Override
+        public void run() {
+
+            try{
+                res =new Book().allBook();
+               data.putString("datalist",res);
+
+            }catch (Exception e){
+                Log.e("mylog ","mylog----->"+e.toString());
+            }
+
+            msg.setData(data);
+            handler.sendMessage(msg);
+        }
+    };
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(MainActivity.this,PushBookActivity.class);
-        startActivity(intent);
+       switch (v.getId()){
+           case R.id.fab:
+               Intent intent = new Intent(MainActivity.this,PushBookActivity.class);
+               startActivity(intent);
+               break;
+       }
     }
 
     @Override

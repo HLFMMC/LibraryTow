@@ -9,19 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mmc.library.R;
+import com.mmc.library.bean.Book;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by HM on 2017/2/22.
  */
 public class BookAdapter extends BaseAdapter {
     private Context mContext;
-    private LinkedList<HashMap<String,String>> mList;
+    private List<Book> mList;
 
     private LayoutInflater inflater;
-    public BookAdapter(Context context, LinkedList<HashMap<String, String>> list){
+    public BookAdapter(Context context,List<Book> list){
         this.mContext = context;
         this.mList = list;
         inflater = LayoutInflater.from(mContext);
@@ -51,12 +54,15 @@ public class BookAdapter extends BaseAdapter {
             holder.bookCover = (ImageView)convertView.findViewById(R.id.book_cover);
             holder.tvBookName = (TextView)convertView.findViewById(R.id.bookName);
             holder.tvBooKDesc = (TextView)convertView.findViewById(R.id.bookDesc);
+            holder.tvAuthor=(TextView)convertView.findViewById(R.id.bookAuthor);
             convertView.setTag(holder);
         } else {
             holder = (Holder)convertView.getTag();
         }
-        holder.tvBookName.setText(mList.get(position).get("bookName"));
-        holder.tvBooKDesc.setText(mList.get(position).get("bookDesc"));
+        holder.bookCover.setImageResource(R.drawable.nocover);
+        holder.tvBookName.setText(mList.get(position).getName());
+        holder.tvBooKDesc.setText(mList.get(position).getDesc());
+        holder.tvAuthor.setText(mList.get(position).getAutor());
 //        holder.bookCover.setBackgroundResource(Integer.parseInt(mList.get(position).get("bookCover")));
         return convertView;
     }
