@@ -18,7 +18,7 @@
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="80dp"
-                android:id="@+id/book_cover"
+                android:id="@+id/book_info_img_cover"
                 android:src="@drawable/nocover" />
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -29,11 +29,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bookName"
+                    android:id="@+id/book_info_bookName"
                     android:text="图书名称"
                     android:textSize="18sp"/>
                 <TextView
-                    android:id="@+id/bookInfo_author"
+                    android:id="@+id/book_info_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/bookDesc"
+                android:id="@+id/book_info_bookDesc"
                 android:text="图书desc"/>
         </LinearLayout>
 
@@ -71,7 +71,7 @@
                 android:text="加入购物车"
                 android:background="@color/color_bottom_text_press"
                 android:textColor="@color/base_color_text_white"
-                android:id="@+id/button"
+                android:id="@+id/book_info_add_cart"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -81,12 +81,12 @@
                 android:layout_height="wrap_content"
                 android:text="立即购买"
                 android:layout_marginRight="10dp"
-                android:id="@+id/button2"
+                android:id="@+id/book_info_buy"
                 android:background="@color/color_bottom_text_press"
                 android:textColor="@color/base_color_text_white"
-                android:layout_alignBottom="@+id/button"
-                android:layout_toLeftOf="@+id/button"
-                android:layout_toStartOf="@+id/button" />
+                android:layout_alignBottom="@+id/book_info_add_cart"
+                android:layout_toLeftOf="@+id/book_info_add_cart"
+                android:layout_toStartOf="@+id/book_info_add_cart" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -95,7 +95,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:id="@+id/editText"
+                android:id="@+id/book_info_commit_editText"
                 android:background="@drawable/shapeline"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="70dp"
@@ -106,7 +106,7 @@
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:text="回复"
-                android:id="@+id/btn_replay"
+                android:id="@+id/book_info_replayBtn"
                 android:background="@color/color_bottom_text_press"
                 android:textColor="@color/base_color_text_white"
                 android:layout_centerVertical="true"
@@ -123,10 +123,8 @@
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/bookReplay"
+                android:id="@+id/book_info_bookReplayList"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
-
-
     </LinearLayout>
 </LinearLayout>

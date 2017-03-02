@@ -1,122 +1,160 @@
 package com.mmc.library.ui.activity;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
+import android.app.ProgressDialog;
+import android.text.TextUtils;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mmc.library.R;
 import com.mmc.library.adapter.BookInfoAdapter;
+import com.mmc.library.base.BaseActivity;
 import com.mmc.library.bean.BookInfo;
 import com.mmc.library.bean.Community;
+import com.mmc.library.ui.presenters.BookPresenters;
+import com.mmc.library.ui.presenters.base.Message;
+import com.mmc.library.ui.view.LoadView;
+import com.mmc.library.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnItemClick;
+
 /**
  * Created by HM on 2017/2/28.
  */
-public class BookInfoActivity  extends AppCompatActivity implements View.OnClickListener {
-    private TextView bookName;
-    private TextView bookDesc;
-    private RelativeLayout btn_back;
-    private BookInfo bookInfo;
-    private TextView bookAuthor;
-    private ImageView bookImg;
+public class BookInfoActivity  extends BaseActivity<BookPresenters> implements LoadView {
     private List<Community> community;
     private BookInfoAdapter adapter;
-    private  int bookId;
+    private int bookId;
 
-    private ListView listView;
+    @BindView(R.id.book_info_img_cover)
+    ImageView book_info_img_cover;
+
+    @BindView(R.id.book_info_add_cart)
+    Button book_info_add_cart;
+
+    @BindView(R.id.book_info_bookDesc)
+    TextView book_info_bookDesc;
+
+
+    @BindView(R.id.book_info_author)
+    TextView book_info_author;
+
+    @BindView(R.id.book_info_bookName)
+    TextView book_info_bookName;
+
+    @BindView(R.id.book_info_bookReplayList)
+            ListView book_info_bookReplayList;
+    @OnItemClick(R.id.book_info_bookReplayList)
+    void item(int i){
+
+    }
+
+    @BindView(R.id.book_info_replayBtn)
+    Button book_info_replayBtn;
+
+    @BindView(R.id.book_info_buy)
+    Button book_info_buy;
+
+    @BindView(R.id.book_info_commit_editText)
+    EditText book_info_commit_editText;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bookinfo);
-        init();
-        inidData();
-        new Thread(networtTask).start();
-    }
-    private void init(){
-        bookAuthor= (TextView) findViewById(R.id.bookInfo_author);
-        bookImg= (ImageView) findViewById(R.id.book_cover);
-        bookDesc = (TextView) findViewById(R.id.bookDesc);
-        bookName = (TextView) findViewById(R.id.bookName);
-        btn_back = (RelativeLayout) findViewById(R.id.btn_back);
-        listView= (ListView) findViewById(R.id.bookReplay);
-        btn_back.setOnClickListener(this);
+    protected int getContentView() {
+        return R.layout.activity_bookinfo;
     }
 
+    @Override
+    protected BookPresenters getPresenter() {
+        return new BookPresenters();
+    }
 
-    public void inidData(){
-        bookId=getIntent().getIntExtra("bookId",0);
-        community=new ArrayList<Community>();
+    ProgressDialog pdg = null;
+
+    public void initData(){
+        pdg = ProgressDialog.show(this,"","加载图书中。。。");
+        bookId=getIntent().getIntExtra("bookId",-1);
+        if(bookId == -1) {
+            showMessage("加载图书信息失败");
+            return;
+        }
+        community=new ArrayList<>();
         adapter=new BookInfoAdapter(BookInfoActivity.this,community);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
+        book_info_bookReplayList.setAdapter(adapter);
+        mPresenter.LoadBookInfo(com.mmc.library.ui.presenters.base.Message.obtain(this,bookId+1,bookId+1));
     }
-    Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Bundle data=msg.getData();
-            BookInfo book=(BookInfo) data.getSerializable("bookinfo");
-            bookDesc.setText(book.getBook().getDesc());
-            bookName.setText(book.getBook().getName());
-            bookAuthor.setText(book.getBook().getAutor());
-            if(book.getBook().getPic()!=""){
-                Glide.with(BookInfoActivity.this).load(book.getBook().getPic()).centerCrop().placeholder(R.drawable.nocover).crossFade().into(bookImg);
-            }
-            if(book.getCommunity()!=null){
-                if (book.getCommunity().size()>0){
-                    community.clear();
-                }
-                community.addAll(book.getCommunity());
-                adapter.notifyDataSetChanged();
-            }
-
-        }
-    };
-
-    Runnable networtTask=new Runnable() {
-        Message msg = new Message();
-        Bundle data = new Bundle();
-        String res="";
-        @Override
-        public void run() {
-            try{
-                BookInfo res =new BookInfo().getBookInfo(bookId);
-
-               data.putSerializable("bookinfo",res);
-
-            }catch (Exception e){
-                Log.e("mylog ","mylog----->"+e.toString());
-            }
-
-            msg.setData(data);
-            handler.sendMessage(msg);
-        }
-    };
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_back:
-                finish();
+    public void showMessage(String message) {
+        showToast(message);
+    }
+
+    @Override
+    public void handleMessage(com.mmc.library.ui.presenters.base.Message msg) {
+        switch (msg.what){
+            case Constant.DISMIIS_DIALOG:
+                dismissDialog();
+                break;
+            case Constant.LOAD_BOOK_FAILD_CODE:
+                LoadFailed();
+                break;
+            case Constant.LOAD_BOOK_SUCCUSE_CODE:
+                LoadSuccese(msg);
                 break;
         }
+    }
+
+    @Override
+    public void LoadFailed() {
+        showMessage("加载图书信息失败");
+    }
+
+    @Override
+    public void LoadSuccuse(String str) {
+
+    }
+
+    /**
+     * 加载图书信息成功
+     * @param msg
+     */
+    @Override
+    public void LoadSuccese(Message msg) {
+        BookInfo bookInfo = (BookInfo) msg.obj;
+        book_info_bookDesc.setText(bookInfo.getBook().getDesc());
+        book_info_bookName.setText(bookInfo.getBook().getName());
+        book_info_author.setText(bookInfo.getBook().getAutor());
+        if(!TextUtils.isEmpty(bookInfo.getBook().getPic())){
+            Glide.with(BookInfoActivity.this)
+                    .load(bookInfo.getBook().getPic())
+                    .centerCrop()
+                    .placeholder(R.drawable.nocover)
+                    .crossFade().into(book_info_img_cover);
+        }
+        if(bookInfo.getCommunity()!=null){
+            if (bookInfo.getCommunity().size()>0){
+                community.clear();
+            }
+            community.addAll(bookInfo.getCommunity());
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void LoadFinish() {
+
+    }
+
+    @Override
+    public void dismissDialog() {
+        if(pdg != null)
+            pdg.dismiss();
     }
 }

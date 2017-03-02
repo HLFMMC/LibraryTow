@@ -31,12 +31,12 @@ public class User implements Serializable{
         return user;
     }
 
-    public User getUserInfo()throws IOException{
-        Gson gson=new Gson();
-        String res=utils.get(Constant.API_ADDRESS+"/api/user",this.getToken());
-        User user= gson.fromJson(res,User.class);
-        return user;
-    }
+//    public User getUserInfo()throws IOException{
+//        Gson gson=new Gson();
+//        String res=utils.get(Constant.API_ADDRESS+"/api/user",this.getToken());
+//        User user= gson.fromJson(res,User.class);
+//        return user;
+//    }
 
     public String getPhone() {
         return phone;

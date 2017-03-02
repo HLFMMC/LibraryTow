@@ -8,13 +8,13 @@ import android.widget.TextView;
 
 import com.mmc.library.R;
 import com.mmc.library.base.BaseActivity;
-import com.mmc.library.bean.User;
 import com.mmc.library.ui.presenters.LoginPresenters;
 import com.mmc.library.ui.presenters.MainPresenters;
-import com.mmc.library.ui.presenters.base.BaseView;
 import com.mmc.library.ui.presenters.base.Message;
-import com.mmc.library.utils.Cache;
+import com.mmc.library.ui.view.LoadView;
 import com.mmc.library.utils.Constant;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,7 +22,7 @@ import butterknife.OnClick;
 /**
  * Created by HM on 2017/2/21.
  */
-public class LoginActivity extends BaseActivity<LoginPresenters> implements BaseView{
+public class LoginActivity extends BaseActivity<LoginPresenters> implements LoadView{
 
     @BindView(R.id.login_account)
     EditText login_account;
@@ -70,11 +70,6 @@ public class LoginActivity extends BaseActivity<LoginPresenters> implements Base
         return new LoginPresenters();
     }
 
-    @Override
-    protected Cache getCache() {
-        return Cache.get(this);
-    }
-
     /*注册*/
     private void register() {
         Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
@@ -87,23 +82,51 @@ public class LoginActivity extends BaseActivity<LoginPresenters> implements Base
 
     @Override
     public void showMessage(String message) {
-
+        showToast(message);
     }
 
     @Override
     public void handleMessage(Message msg) {
-        if(pdg != null)
-            pdg.dismiss();
         switch (msg.what) {
+            case Constant.DISMIIS_DIALOG:
+                dismissDialog();
+                break;
             case Constant.LOGIN_FAILD_CODE:
-                showToast("登录失败");
-                finish();
+                LoadFailed();
                 break;
             case Constant.LOGIN_SUCCUSE_CODE:
-                User user = (User)msg.obj;
-                getCache().put("user",user);
-                finish();
+                LoadSuccese(msg);
                 break;
         }
+    }
+
+    @Override
+    public void LoadFailed() {
+        showMessage("登录失败");
+        login_user_password.setText("");
+    }
+
+    @Override
+    public void LoadSuccuse(String str) {
+
+    }
+
+    @Override
+    public void LoadSuccese(Message msg) {
+        cache.put(Constant.LOGIN_USER_CACHE_KEY,(Serializable)msg.obj);
+        showMessage("欢迎回来");
+        mainPresenters.loginFinish(Message.obtain(new MainActivity(),1));
+        finish();
+    }
+
+    @Override
+    public void LoadFinish() {
+
+    }
+
+    @Override
+    public void dismissDialog() {
+        if(pdg != null)
+            pdg.dismiss();
     }
 }

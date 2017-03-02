@@ -17,13 +17,14 @@ public class BasePresenter implements IPresenter {
 
     @Override
     public void onStart() {
-        //注册bus
     }
 
     @Override
     public void onDestroy() {
-        mCompositeSubscription.unsubscribe();//解除Rx订阅
-        this.mCompositeSubscription = null;//释放资源
+        if(mCompositeSubscription != null) {
+            mCompositeSubscription.unsubscribe();//解除Rx订阅
+            this.mCompositeSubscription = null;//释放资源
+        }
     }
 
     protected void addSubscrebe(Subscription subscription) {

@@ -1,11 +1,15 @@
 package com.mmc.library.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
+import com.mmc.library.bean.User;
 import com.mmc.library.ui.presenters.base.IPresenter;
 import com.mmc.library.utils.Cache;
+import com.mmc.library.utils.Constant;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -24,24 +28,37 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
     private Unbinder mUnbinder;
 
+    public boolean isLogin;
+
+    public Context context;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //获取继承该ac的实际对象Presenter
         mPresenter = getPresenter();
-        //注册EventBus主线
+        context = this;
         //设置主要布局
         setContentView(getContentView());
         //注册ButterKnife
         mUnbinder = ButterKnife.bind(this);
-        cache = getCache();
+        cache = Cache.get(this);
+        isLogin = checkUserIsLogin();
         //初始化数据
         initData();
 
     }
 
+    public Boolean checkUserIsLogin(){
+        User user = (User)cache.getAsObject(Constant.LOGIN_USER_CACHE_KEY);
+        return user != null;
+    }
+
+    public void onClickBack(View view){
+        finish();
+    }
     public void showToast(String v){
-        Toast.makeText(this,v,Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,v,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -74,5 +91,4 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
     protected abstract P getPresenter();
 
-    protected abstract Cache getCache();
 }

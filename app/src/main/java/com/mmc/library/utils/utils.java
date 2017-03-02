@@ -1,5 +1,7 @@
 package com.mmc.library.utils;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mmc.library.ui.presenters.base.Message;
@@ -24,22 +26,52 @@ public class utils {
     public static final MediaType JSON= MediaType.parse("application/json; charset=utf-8");
     static OkHttpClient client=new OkHttpClient();
 
-    public static String get(String url)throws IOException {
+    public static void get(Message msg,String url,Class<?> cls)throws IOException{
+        Gson gson=new Gson();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-
-        Response response = client.newCall(request).execute();
-        return response.body().string();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response != null) {
+                String result = response.body().string();
+                Map<String,Object> resMap= gson.fromJson(result,new TypeToken<Map<String,Object>>(){}.getType());
+                Log.e("tag json",gson.toJson(resMap.get("data")));
+                msg.obj = gson.fromJson(gson.toJson(resMap.get("data")),cls);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static String get(String url,String token)throws IOException{
+    public static void getOfList(Message msg,String url)throws IOException{
+        Gson gson=new Gson();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+            Response response = client.newCall(request).execute();
+            if(response != null) {
+                String result = response.body().string();
+                Map<String,Object> resMap= gson.fromJson(result,new TypeToken<Map<String,Object>>(){}.getType());
+                msg.obj = gson.toJson(resMap.get("data"));
+            }
+    }
+
+    public static void get(Message msg,String url,String token,Class<?> cls)throws IOException{
+        Gson gson=new Gson();
         Request request = new Request.Builder()
                 .url(url+"?token="+token)
                 .build();
-
-        Response response = client.newCall(request).execute();
-        return response.body().string();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response != null) {
+                String result = response.body().string();
+                Map<String,Object> resMap= gson.fromJson(result,new TypeToken<Map<String,Object>>(){}.getType());
+                msg.obj = gson.fromJson(gson.toJson(resMap.get("data")),cls);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public static void post(Message msg,HashMap map, String url,Class<?> cls){
             Gson gson=new Gson();

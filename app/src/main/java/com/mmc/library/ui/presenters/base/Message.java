@@ -289,6 +289,15 @@ public final class Message implements Parcelable {
         return m;
     }
 
+    public static Message obtain(BaseView v, int arg1,int arg2) {
+        Message m = obtain();
+        m.target = v;
+        m.arg1 = arg1;
+        m.arg2 = arg2;
+        return m;
+    }
+
+
     public static Message obtain(BaseView v,String str,String str1) {
         Message m = obtain();
         m.target = v;

@@ -1,21 +1,19 @@
 package com.mmc.library.ui.activity;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mmc.library.R;
-import com.mmc.library.util.CheckUtil;
+import com.mmc.library.base.BaseActivity;
+import com.mmc.library.ui.presenters.LoginPresenters;
 
 /**
  * Created by HM on 2017/2/21.
  */
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends BaseActivity<LoginPresenters> implements View.OnClickListener{
     private Button btn_register;
     private EditText edt_account;
     private EditText edt_password;
@@ -25,10 +23,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private RelativeLayout btn_back;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        init();
+    protected int getContentView() {
+        return R.layout.activity_register;
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected LoginPresenters getPresenter() {
+        return new LoginPresenters();
     }
 
     private void init() {

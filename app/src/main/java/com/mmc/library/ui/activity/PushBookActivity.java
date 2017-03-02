@@ -1,18 +1,17 @@
 package com.mmc.library.ui.activity;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.mmc.library.R;
+import com.mmc.library.base.BaseActivity;
+import com.mmc.library.ui.presenters.BookPresenters;
 
 /**
  * Created by HM on 2017/2/28.
  */
-public class PushBookActivity extends AppCompatActivity  {
+public class PushBookActivity extends BaseActivity<BookPresenters> {
     private RelativeLayout btn_back;
     private Button btn_File;
     private Button btn_Push;
@@ -24,10 +23,18 @@ public class PushBookActivity extends AppCompatActivity  {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pushbook);
-      //  init();
+    protected int getContentView() {
+        return R.layout.activity_pushbook;
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected BookPresenters getPresenter() {
+        return new BookPresenters();
     }
 
     private  void init() {

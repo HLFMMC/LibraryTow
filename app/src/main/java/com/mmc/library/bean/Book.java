@@ -8,7 +8,6 @@ import com.mmc.library.utils.utils;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,22 +54,22 @@ public class Book implements Serializable{
         Map<String,Object>  resMap= gson.fromJson(res,new TypeToken<Map<String,Object>>(){}.getType());
         int code=(int)resMap.get("code");
     }
-    public String allBook()throws IOException{
-        Gson gson=new Gson();
-        String res=utils.get(Constant.API_ADDRESS+"/api/books");
-        Map<String,Object>  resMap= gson.fromJson(res,new TypeToken<Map<String,Object>>(){}.getType());
-        Object obj=resMap.get("data");
-        return gson.toJson(obj);
-    }
+//    public String allBook()throws IOException{
+//        Gson gson=new Gson();
+//        String res=utils.get(Constant.API_ADDRESS+"/api/books");
+//        Map<String,Object>  resMap= gson.fromJson(res,new TypeToken<Map<String,Object>>(){}.getType());
+//        Object obj=resMap.get("data");
+//        return gson.toJson(obj);
+//    }
 
-    public List<Book> allBook(int tag)throws IOException{
-        Gson gson=new Gson();
-        String res=utils.get(Constant.API_ADDRESS+"/api/books/"+String.valueOf(tag));
-        Map<String,Object>  resMap= gson.fromJson(res,new TypeToken<Map<String,Object>>(){}.getType());
-        Object obj=resMap.get("data");
-        List<Book> books=gson.fromJson(gson.toJson(obj),new TypeToken<List<Book>>(){}.getType());
-        return books;
-    }
+//    public List<Book> allBook(int tag)throws IOException{
+//        Gson gson=new Gson();
+//        String res=utils.get(Constant.API_ADDRESS+"/api/books/"+String.valueOf(tag));
+//        Map<String,Object>  resMap= gson.fromJson(res,new TypeToken<Map<String,Object>>(){}.getType());
+//        Object obj=resMap.get("data");
+//        List<Book> books=gson.fromJson(gson.toJson(obj),new TypeToken<List<Book>>(){}.getType());
+//        return books;
+//    }
 
     public Category getCategory() {
         return category;

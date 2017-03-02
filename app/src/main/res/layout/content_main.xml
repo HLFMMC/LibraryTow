@@ -13,19 +13,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/categoryLy"
-        >
+        android:id="@+id/categoryLy">
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/category"
+            android:id="@+id/main_category"
             android:layout_weight="1" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="搜索"
-            android:id="@+id/btn_search"
+            android:id="@+id/main_searchBtn"
             android:layout_alignLeft="@+id/spinner"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -34,6 +33,6 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/bookList"
+        android:id="@+id/main_bookList"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>
