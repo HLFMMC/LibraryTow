@@ -34,6 +34,8 @@
         <activity android:name="com.mmc.library.ui.activity.RegisterActivity"></activity>
         <activity android:name="com.mmc.library.ui.activity.BookInfoActivity"></activity>
         <activity android:name="com.mmc.library.ui.activity.PushBookActivity"></activity>
+        <activity android:name=".ui.activity.MyBookActivity"/>
+        <activity android:name=".ui.activity.UserInfoActivity"/>
     </application>
 
 </manifest>

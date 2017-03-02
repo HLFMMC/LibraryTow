@@ -19,6 +19,7 @@ import com.mmc.library.R;
 import com.mmc.library.adapter.BookAdapter;
 import com.mmc.library.base.BaseActivity;
 import com.mmc.library.bean.Book;
+import com.mmc.library.bean.User;
 import com.mmc.library.ui.presenters.MainPresenters;
 import com.mmc.library.ui.presenters.base.Message;
 import com.mmc.library.ui.view.LoadView;
@@ -42,7 +43,8 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
     void itemClick(int position){
         Intent intent = new Intent(MainActivity.this, BookInfoActivity.class);
         Bundle mbundle = new Bundle();
-        mbundle.putSerializable("bookId",position);
+        int bookId=dataList.get(position).getId();
+        mbundle.putSerializable("bookId",bookId);
         intent.putExtras(mbundle);
         startActivity(intent);
     }
@@ -120,6 +122,16 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
             cache.remove(Constant.LOGIN_USER_CACHE_KEY);
             showMessage("登出成功！");
             isNeedUpdateMenu = true;
+        }else if(id==R.id.mybook){
+            if(checkUserIsLogin()){
+                Intent intent = new Intent(MainActivity.this,MyBookActivity.class);
+                startActivity(intent);
+            }
+        }else if(id==R.id.userInfo){
+            if(checkUserIsLogin()){
+                Intent intent = new Intent(MainActivity.this,UserInfoActivity.class);
+                startActivity(intent);
+            }
         }
         return super.onOptionsItemSelected(item);
     }

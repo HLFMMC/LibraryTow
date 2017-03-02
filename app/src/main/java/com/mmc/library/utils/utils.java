@@ -57,6 +57,19 @@ public class utils {
             }
     }
 
+    public static void getOfList(Message msg,String url,String token)throws IOException{
+        Gson gson=new Gson();
+        Request request = new Request.Builder()
+                .url(url+"?token="+token)
+                .build();
+        Response response = client.newCall(request).execute();
+        if(response != null) {
+            String result = response.body().string();
+            Map<String,Object> resMap= gson.fromJson(result,new TypeToken<Map<String,Object>>(){}.getType());
+            msg.obj = gson.toJson(resMap.get("data"));
+        }
+    }
+
     public static void get(Message msg,String url,String token,Class<?> cls)throws IOException{
         Gson gson=new Gson();
         Request request = new Request.Builder()

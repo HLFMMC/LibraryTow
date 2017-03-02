@@ -88,7 +88,7 @@ public class BookInfoActivity  extends BaseActivity<BookPresenters> implements L
         community=new ArrayList<>();
         adapter=new BookInfoAdapter(BookInfoActivity.this,community);
         book_info_bookReplayList.setAdapter(adapter);
-        mPresenter.LoadBookInfo(com.mmc.library.ui.presenters.base.Message.obtain(this,bookId+1,bookId+1));
+        mPresenter.LoadBookInfo(com.mmc.library.ui.presenters.base.Message.obtain(this,bookId,bookId));
     }
 
     @Override

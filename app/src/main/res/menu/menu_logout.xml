@@ -10,4 +10,12 @@
         android:title="购物车"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/mybook"
+        android:title="我的图书"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/userInfo"
+        android:title="个人资料"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

@@ -32,6 +32,8 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
     public Context context;
 
+    public User user;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         cache = Cache.get(this);
         isLogin = checkUserIsLogin();
         //初始化数据
+        this.user=(User)cache.getAsObject(Constant.LOGIN_USER_CACHE_KEY);
         initData();
 
     }

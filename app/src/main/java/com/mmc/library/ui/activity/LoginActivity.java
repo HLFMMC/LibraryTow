@@ -2,12 +2,14 @@ package com.mmc.library.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mmc.library.R;
 import com.mmc.library.base.BaseActivity;
+import com.mmc.library.bean.User;
 import com.mmc.library.ui.presenters.LoginPresenters;
 import com.mmc.library.ui.presenters.MainPresenters;
 import com.mmc.library.ui.presenters.base.Message;
@@ -115,6 +117,9 @@ public class LoginActivity extends BaseActivity<LoginPresenters> implements Load
     public void LoadSuccese(Message msg) {
         cache.put(Constant.LOGIN_USER_CACHE_KEY,(Serializable)msg.obj);
         showMessage("欢迎回来");
+        Log.e(TAG,"---->"+msg.obj.toString());
+        user=(User)msg.obj;
+        Log.e(TAG,"---->user-->"+user.toString());
         mainPresenters.loginFinish(Message.obtain(new MainActivity(),1));
         finish();
     }
