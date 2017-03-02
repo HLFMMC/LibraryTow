@@ -1,20 +1,18 @@
 package com.mmc.library.bean;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mmc.library.utils.Constant;
 import com.mmc.library.utils.utils;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 
 
 /**
  * Created by luxingwen on 2017/2/28.
  */
 
-public class User {
+public class User implements Serializable{
     private int id;
     private String username;
     private String password;
@@ -23,27 +21,7 @@ public class User {
     private Float money;
     private String token;
 
-    public User login() throws IOException {
-        Map<String,String> map=new HashMap<String,String>();
-        map.put("username",this.getUsername());
-        map.put("password",this.getPassword());
-        Gson gson=new Gson();
-        String str= gson.toJson(map);
 
-        String res= utils.post(Constant.API_ADDRESS+"/api/login",str);
-        Map<String,Object>  resMap= gson.fromJson(res,new TypeToken<Map<String,Object>>(){}.getType());
-        Object obj=resMap.get("data");
-        User user =gson.fromJson(gson.toJson(obj),User.class);
-        return user;
-    }
-
-    public User register()throws IOException{
-        Gson gson=new Gson();
-        String str =gson.toJson(this);
-        String res=utils.post(Constant.API_ADDRESS+"/api/register",str);
-        User user= gson.fromJson(res,User.class);
-        return user;
-    }
 
     public User update()throws IOException{
         Gson gson=new Gson();

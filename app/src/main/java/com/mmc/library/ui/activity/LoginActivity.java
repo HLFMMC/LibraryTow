@@ -1,102 +1,80 @@
 package com.mmc.library.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mmc.library.R;
+import com.mmc.library.base.BaseActivity;
 import com.mmc.library.bean.User;
-import com.mmc.library.ui.MainActivity;
+import com.mmc.library.ui.presenters.LoginPresenters;
+import com.mmc.library.ui.presenters.MainPresenters;
+import com.mmc.library.ui.presenters.base.BaseView;
+import com.mmc.library.ui.presenters.base.Message;
+import com.mmc.library.utils.Cache;
+import com.mmc.library.utils.Constant;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by HM on 2017/2/21.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button btn_login;
-    private EditText edt_account;
-    private EditText edt_password;
+public class LoginActivity extends BaseActivity<LoginPresenters> implements BaseView{
 
-    private TextView btn_forget;
-    private TextView btn_register;
+    @BindView(R.id.login_account)
+    EditText login_account;
+
+    @BindView(R.id.login_user_password)
+    EditText login_user_password;
+
+    @BindView(R.id.login_forgetBtn)
+    TextView login_forgetBtn;
+
+    @BindView(R.id.login_registerBtn)
+    TextView login_registerBtn;
+
+
+    ProgressDialog pdg = null;
+    @BindView(R.id.login_loginBtn)
+    Button login_LoginBtn;
+    @OnClick(R.id.login_loginBtn)
+    void login(){
+        String account = login_account.getText().toString().trim();
+        String password = login_user_password.getText().toString().trim();
+        if(account.equals("")) {
+            showToast(getString(R.string.input_account_null));
+        }else if(password.equals("")) {
+            showToast(getString(R.string.input_password_null));
+        } else {
+            pdg = ProgressDialog.show(this,"","正在登录。。。");
+            mPresenter.login(Message.obtain(this,account,password));
+        }
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        init();
-    }
-    private void init(){
-        btn_login = (Button)this.findViewById(R.id.btn_login);
-        btn_forget = (TextView) this.findViewById(R.id.btn_forget);
-        btn_register = (TextView) this.findViewById(R.id.btn_register);
-
-        edt_account = (EditText) this.findViewById(R.id.account_login);
-        edt_password = (EditText) this.findViewById(R.id.password_login);
-
-        btn_login.setOnClickListener(this);
-        btn_forget.setOnClickListener(this);
-        btn_register.setOnClickListener(this);
+    protected int getContentView() {
+        return R.layout.activity_login;
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_login:
-                login();
-                break;
-            case R.id.btn_forget:
-                forget();
-                break;
-            case R.id.btn_register:
-                register();
-                break;
-        }
+    protected void initData() {
     }
 
-    //登录
-    private void login() {
-        String account = edt_account.getText().toString().trim();
-        String password = edt_password.getText().toString().trim();
-
-//        if(account.equals("")) {
-//           Toast.makeText(this,"账号错误！",Toast.LENGTH_LONG).show();
-//        }else if(password.equals("")) {
-//           Toast.makeText(this,"密码错误！",Toast.LENGTH_LONG).show();
-//        } else
-
-
-
-        if(loginRun(account,password)) {
-            //登录成功后跳到主页
-           finish();
-        } else{
-            Toast.makeText(this, "注册失败！", Toast.LENGTH_LONG).show();
-        }
-
+    MainPresenters mainPresenters;
+    @Override
+    protected LoginPresenters getPresenter() {
+        mainPresenters = new MainPresenters();
+        return new LoginPresenters();
     }
 
-    private boolean loginRun(String account,String password) {
-        boolean flag = false;
-        /*登录的方法*/
-//        return  flag;
-
-        Log.e("mylog...","---->loginrun");
-        User user=new User();
-        user.setUsername(account);
-        user.setPassword(password);
-        try {
-            User resUser= user.login();
-            System.out.print("user--->"+resUser.toString());
-        }catch (Exception e){
-            Log.e("mylog-","---->"+e.toString());
-        }
-        return true;
+    @Override
+    protected Cache getCache() {
+        return Cache.get(this);
     }
+
     /*注册*/
     private void register() {
         Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
@@ -105,5 +83,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     // 忘记密码
     private void forget() {
 
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void handleMessage(Message msg) {
+        if(pdg != null)
+            pdg.dismiss();
+        switch (msg.what) {
+            case Constant.LOGIN_FAILD_CODE:
+                showToast("登录失败");
+                finish();
+                break;
+            case Constant.LOGIN_SUCCUSE_CODE:
+                User user = (User)msg.obj;
+                getCache().put("user",user);
+                finish();
+                break;
+        }
     }
 }

@@ -1,17 +1,15 @@
-package com.mmc.library.ui;
+package com.mmc.library.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -22,10 +20,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mmc.library.R;
 import com.mmc.library.adapter.BookAdapter;
+import com.mmc.library.base.BaseActivity;
 import com.mmc.library.bean.Book;
-import com.mmc.library.ui.activity.BookInfoActivity;
-import com.mmc.library.ui.activity.LoginActivity;
-import com.mmc.library.ui.activity.PushBookActivity;
+import com.mmc.library.ui.presenters.MainPresenters;
+import com.mmc.library.ui.presenters.base.BaseView;
+import com.mmc.library.utils.Cache;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class MainActivity extends BaseActivity<MainPresenters> implements View.OnClickListener,AdapterView.OnItemClickListener,BaseView{
     private  Toolbar toolbar;
     private FloatingActionButton fab;
     private ListView bookList;
@@ -47,12 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayAdapter<String> categoryAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        init();
-        initData();
-        new Thread(networtTask).start();
+    protected int getContentView() {
+        return R.layout.activity_main;
     }
 
     private void init() {
@@ -67,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void initData(){
+        init();
         dataList=new ArrayList<Book>();
         adapter=new BookAdapter(MainActivity.this,dataList);
         bookList.setAdapter(adapter);
@@ -79,6 +75,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
+        new Thread(networtTask).start();
+    }
+
+    @Override
+    protected MainPresenters getPresenter() {
+        return new MainPresenters();
+    }
+
+    @Override
+    protected Cache getCache() {
+        return null;
     }
 
     Handler handler=new Handler(){
@@ -157,5 +164,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void handleMessage(com.mmc.library.ui.presenters.base.Message msg) {
     }
 }

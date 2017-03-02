@@ -7,7 +7,6 @@ import com.mmc.library.utils.utils;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,9 +35,9 @@ public class Book implements Serializable{
         Gson gson=new Gson();
         String str= gson.toJson(map);
 
-        String res= utils.post(Constant.API_ADDRESS+"/api/login",str,token);
-        Map<String,Object>  resMap= gson.fromJson(res,new TypeToken<Map<String,Object>>(){}.getType());
-        int code=(int)resMap.get("code");
+//        String res= utils.post(Constant.API_ADDRESS+"/api/login",str,token);
+//        Map<String,Object>  resMap= gson.fromJson(res,new TypeToken<Map<String,Object>>(){}.getType());
+//        int code=(int)resMap.get("code");
 
     }
 

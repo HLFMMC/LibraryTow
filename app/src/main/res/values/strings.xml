@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">LibraryTow</string>
     <string name="action_settings">Settings</string>
+    <!--when input is null-->
+    <string name="input_account_null">请填写账号名</string>
+    <string name="input_password_null">请填写密码</string>
 </resources>

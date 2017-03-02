@@ -1,9 +1,6 @@
 package com.mmc.library.bean;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.mmc.library.utils.Constant;
-import com.mmc.library.utils.utils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,9 +21,9 @@ public class Community {
          map.put("content",this.getContent());
          Gson gson=new Gson();
          String str= gson.toJson(map);
-         String res= utils.post(Constant.API_ADDRESS+"/api/book/info/"+String.valueOf(this.getBookId())+"/community",str,this.user.getToken());
-         Map<String,Object>  resMap= gson.fromJson(res,new TypeToken<Map<String,Object>>(){}.getType());
-         int code=(int)resMap.get("code");
+//         String res= utils.post(Constant.API_ADDRESS+"/api/book/info/"+String.valueOf(this.getBookId())+"/community",str,this.user.getToken());
+//         Map<String,Object>  resMap= gson.fromJson(res,new TypeToken<Map<String,Object>>(){}.getType());
+//         int code=(int)resMap.get("code");
      }
 
     public int getId() {

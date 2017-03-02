@@ -48,7 +48,7 @@
                     android:background="@color/transparent"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:id="@+id/account_login"
+                    android:id="@+id/login_account"
                     android:drawableLeft="@mipmap/login_icon_account"
                     android:drawablePadding="10dip"
                     android:layout_gravity="center_horizontal"
@@ -72,7 +72,7 @@
                     android:drawableLeft="@mipmap/login_icon_password"
                     android:drawablePadding="10dip"
                     android:hint="请输入密码"
-                    android:id="@+id/password_login"
+                    android:id="@+id/login_user_password"
                     android:layout_gravity="center_horizontal"
                     android:textColorHint="#ffdddddd" />
             </LinearLayout>
@@ -84,7 +84,7 @@
                 android:textSize="14sp"
                 android:layout_marginTop="10dp"
                 android:textColor="#FFFFFF"
-                android:id="@+id/btn_login"
+                android:id="@+id/login_loginBtn"
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
                 android:background="#337AB7"
@@ -103,7 +103,7 @@
         android:layout_alignLeft="@+id/linearLayout"
         android:layout_alignStart="@+id/linearLayout"
         android:layout_marginBottom="30dp"
-        android:id="@+id/btn_forget" />
+        android:id="@+id/login_forgetBtn" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -111,8 +111,8 @@
         android:text="注册>>"
         android:textSize="16sp"
         android:textColor="#FFFFFF"
-        android:id="@+id/btn_register"
-        android:layout_alignBottom="@+id/btn_forget"
+        android:id="@+id/login_registerBtn"
+        android:layout_alignBottom="@+id/login_forgetBtn"
         android:layout_alignRight="@+id/linearLayout"
         android:layout_alignEnd="@+id/linearLayout" />
 </RelativeLayout>

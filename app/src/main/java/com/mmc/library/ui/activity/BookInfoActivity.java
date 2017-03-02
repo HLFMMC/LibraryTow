@@ -13,17 +13,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mmc.library.R;
 import com.mmc.library.adapter.BookInfoAdapter;
-import com.mmc.library.bean.Book;
 import com.mmc.library.bean.BookInfo;
 import com.mmc.library.bean.Community;
-import com.mmc.library.ui.MainActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
