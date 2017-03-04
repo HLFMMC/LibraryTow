@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/user_profile_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -33,7 +32,6 @@
         android:background="@color/color_bottom_text_press" />
 
     <RelativeLayout
-        android:id="@+id/user_profile_username"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="8dp">
@@ -46,7 +44,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/user_profile_username_text"
+            android:id="@+id/user_profile_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -62,7 +60,6 @@
         android:background="@color/color_bottom_text_press" />
 
     <RelativeLayout
-        android:id="@+id/user_profile_money"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="8dp">
@@ -75,6 +72,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/user_profile_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -90,7 +88,6 @@
         android:background="@color/color_bottom_text_press" />
 
     <RelativeLayout
-        android:id="@+id/user_profile_sex"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="8dp">
@@ -103,7 +100,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/user_profile_sex_text"
+            android:id="@+id/user_profile_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -119,7 +116,6 @@
         android:background="@color/color_bottom_text_press" />
 
     <RelativeLayout
-        android:id="@+id/user_profile_email"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="8dp">
@@ -132,7 +128,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/user_profile_email_text"
+            android:id="@+id/user_profile_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -148,7 +144,6 @@
         android:background="@color/color_bottom_text_press" />
 
     <RelativeLayout
-        android:id="@+id/user_profile_personality"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="8dp">
@@ -161,7 +156,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/user_profile_personality_text"
+            android:id="@+id/user_profile_personality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

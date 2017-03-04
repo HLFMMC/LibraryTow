@@ -1,7 +1,7 @@
 package com.mmc.library.ui.activity;
 
 import android.util.Log;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mmc.library.R;
@@ -18,19 +18,16 @@ import butterknife.BindView;
 
 public class UserInfoActivity extends BaseActivity<UserInfoPresenters> implements LoadView {
 
-//    @BindView(R.id.user_profile_img)
-//    ImageView user_profile_img;
-
-    @BindView(R.id.user_profile_username_text)
-    TextView user_profile_username_text;
+    @BindView(R.id.user_profile_userimg)
+    ImageView user_profile_img;
 
     @BindView(R.id.user_profile_username)
-    LinearLayout user_profile_username;
+    TextView user_profile_username;
 
-    @BindView(R.id.user_profile_email_text)
+    @BindView(R.id.user_profile_email)
     TextView user_profile_email_text;
 
-    @BindView(R.id.user_profile_sex_text)
+    @BindView(R.id.user_profile_sex)
     TextView user_profile_sex_text;
 
     @BindView(R.id.user_profile_money)
@@ -51,7 +48,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoPresenters> implement
 //                    .placeholder(R.drawable.nocover)
 //                    .crossFade().into(user_profile_img);
 //        }
-        user_profile_username_text.setText(user.getUsername());
+        user_profile_username.setText(user.getUsername());
         user_profile_email_text.setText(user.getEmail());
 
     }
