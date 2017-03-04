@@ -39,15 +39,14 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/input_bg"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/transparent"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:id="@+id/account_reg"
+                    android:id="@+id/register_account_reg"
                     android:drawableLeft="@mipmap/login_icon_account"
                     android:drawablePadding="15dip"
                     android:layout_gravity="center_horizontal"
@@ -63,15 +62,14 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:inputType="textPassword"
                     android:ems="10"
                     android:background="@color/transparent"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="18dp"
                     android:layout_marginRight="20dp"
                     android:drawableLeft="@android:drawable/sym_action_email"
                     android:drawablePadding="10dip"
                     android:hint="邮箱"
-                    android:id="@+id/email_reg"
+                    android:id="@+id/register_email_reg"
                     android:layout_gravity="center_horizontal"
                     android:textColorHint="#ffdddddd" />
                 <View
@@ -89,7 +87,7 @@
                     android:drawableLeft="@mipmap/login_icon_password"
                     android:drawablePadding="15dip"
                     android:hint="密码"
-                    android:id="@+id/password_reg"
+                    android:id="@+id/register_password_reg"
                     android:layout_gravity="center_horizontal"
                     android:textColorHint="#ffdddddd" />
                 <View
@@ -107,7 +105,7 @@
                     android:drawableLeft="@mipmap/login_icon_password"
                     android:drawablePadding="15dip"
                     android:hint="确认密码"
-                    android:id="@+id/password_again"
+                    android:id="@+id/register_password_again"
                     android:layout_gravity="center_horizontal"
                     android:textColorHint="#ffdddddd" />
             </LinearLayout>
@@ -119,9 +117,7 @@
                 android:textSize="14sp"
                 android:layout_marginTop="10dp"
                 android:textColor="#FFFFFF"
-                android:id="@+id/register_btn"
-                android:paddingLeft="35dp"
-                android:paddingRight="35dp"
+                android:id="@+id/register_registerBtn"
                 android:background="#337AB7"
                 android:layout_gravity="center_horizontal" />
 

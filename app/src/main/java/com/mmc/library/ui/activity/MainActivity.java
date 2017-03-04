@@ -13,13 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mmc.library.R;
 import com.mmc.library.adapter.BookAdapter;
 import com.mmc.library.base.BaseActivity;
 import com.mmc.library.bean.Book;
-import com.mmc.library.bean.User;
+import com.mmc.library.ui.presenters.BookPresenters;
 import com.mmc.library.ui.presenters.MainPresenters;
 import com.mmc.library.ui.presenters.base.Message;
 import com.mmc.library.ui.view.LoadView;
@@ -80,11 +78,13 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
     }
 
     public void LoadAllBook(){
-        mPresenter.loadBookList(com.mmc.library.ui.presenters.base.Message.obtain(this));
+        bookPresenters.loadBookList(Message.obtain(this));
     }
 
+    BookPresenters bookPresenters;
     @Override
     protected MainPresenters getPresenter() {
+        bookPresenters = new BookPresenters();
         return new MainPresenters();
     }
 
@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
                 LoadFailed();
                 break;
             case Constant.LOAD_BOOK_SUCCUSE_CODE:
-                LoadSuccuse((String)msg.obj);
+                LoadSuccuse(msg);
                 break;
             case Constant.LOAD_BOOK_FINISH:
                 LoadFinish();
@@ -164,17 +164,16 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
         showMessage("加载图书失败");
     }
     public void LoadSuccuse(String str){
-        List<Book> res=new Gson().fromJson(str,new TypeToken<ArrayList<Book>>(){}.getType());
-        if(res.size()>0){
+    }
+
+    @Override
+    public void LoadSuccuse(Message msg) {
+        List<Book> res = (ArrayList<Book>)msg.obj;
+        if(res.size() > 0) {
             dataList.clear();
         }
         dataList.addAll(res);
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void LoadSuccese(Message msg) {
-
     }
 
     public void LoadFinish(){

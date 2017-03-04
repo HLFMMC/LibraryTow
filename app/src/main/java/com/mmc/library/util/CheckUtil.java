@@ -47,7 +47,6 @@ public class CheckUtil {
 		if(isEmpty(str))return false;
 		String mailRegex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 		Boolean b = str.matches(mailRegex);
-
 		return b;
 	}
 	

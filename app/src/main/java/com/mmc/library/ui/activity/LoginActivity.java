@@ -34,10 +34,18 @@ public class LoginActivity extends BaseActivity<LoginPresenters> implements Load
 
     @BindView(R.id.login_forgetBtn)
     TextView login_forgetBtn;
+    @OnClick(R.id.login_forgetBtn)
+    void forget(){
+
+    }
 
     @BindView(R.id.login_registerBtn)
     TextView login_registerBtn;
-
+    @OnClick(R.id.login_registerBtn)
+    void register(){
+        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+        startActivity(intent);
+    }
 
     ProgressDialog pdg = null;
     @BindView(R.id.login_loginBtn)
@@ -52,7 +60,10 @@ public class LoginActivity extends BaseActivity<LoginPresenters> implements Load
             showToast(getString(R.string.input_password_null));
         } else {
             pdg = ProgressDialog.show(this,"","正在登录。。。");
-            mPresenter.login(Message.obtain(this,account,password));
+            User user = new User();
+            user.setUsername(account);
+            user.setPassword(password);
+            mPresenter.login(Message.obtain(this,user));
         }
     }
 
@@ -72,16 +83,6 @@ public class LoginActivity extends BaseActivity<LoginPresenters> implements Load
         return new LoginPresenters();
     }
 
-    /*注册*/
-    private void register() {
-        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-        startActivity(intent);
-    }
-    // 忘记密码
-    private void forget() {
-
-    }
-
     @Override
     public void showMessage(String message) {
         showToast(message);
@@ -97,7 +98,7 @@ public class LoginActivity extends BaseActivity<LoginPresenters> implements Load
                 LoadFailed();
                 break;
             case Constant.LOGIN_SUCCUSE_CODE:
-                LoadSuccese(msg);
+                LoadSuccuse(msg);
                 break;
         }
     }
@@ -114,7 +115,7 @@ public class LoginActivity extends BaseActivity<LoginPresenters> implements Load
     }
 
     @Override
-    public void LoadSuccese(Message msg) {
+    public void LoadSuccuse(Message msg) {
         cache.put(Constant.LOGIN_USER_CACHE_KEY,(Serializable)msg.obj);
         showMessage("欢迎回来");
         Log.e(TAG,"---->"+msg.obj.toString());

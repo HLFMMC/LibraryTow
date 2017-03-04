@@ -6,8 +6,6 @@ import com.mmc.library.ui.presenters.base.Message;
 import com.mmc.library.utils.Constant;
 import com.mmc.library.utils.utils;
 
-import java.util.HashMap;
-
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -16,7 +14,12 @@ import rx.schedulers.Schedulers;
  * Created by hyj on 2017/3/2.
  */
 
-public class LoginPresenters extends BasePresenter{
+public class LoginPresenters<T> extends BasePresenter{
+
+    utils<User> utils;
+    public LoginPresenters(){
+        utils = new utils<>();
+    }
 
     public void login(Message message){
         addSubscrebe(Observable.just(message)
@@ -27,7 +30,7 @@ public class LoginPresenters extends BasePresenter{
                 .subscribe(msg -> {
                     msg.what = Constant.DISMIIS_DIALOG;
                     msg.HandleMessageToTargetUnrecycle();
-                    if(msg.obj == null){
+                    if(msg.obj == null) {
                         msg.what = Constant.LOGIN_FAILD_CODE;
                         msg.HandleMessageToTarget();
                     } else {
@@ -38,17 +41,32 @@ public class LoginPresenters extends BasePresenter{
         );
     }
     private Message loginImpl(Message msg) {
-        HashMap<String,String> map=new HashMap<String,String>();
-        map.put("username",msg.str);
-        map.put("password",msg.str1);
-        utils.post(msg,map, Constant.API_ADDRESS+"/api/login",User.class);
-        return msg;
+        return utils.post(msg, Constant.API_ADDRESS+"/api/login",User.class);
     }
 
-//    public User register()throws IOException {
-//        Gson gson=new Gson();
-//        String str =gson.toJson(this);
-//        String res=utils.post(Constant.API_ADDRESS+"/api/register",str);
-//        return user;
-//    }
+    public void register(Message message) {
+        addSubscrebe(Observable.just(message)
+                .filter(msg -> msg != null)
+                .map(msg -> registerImpl(msg))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(msg -> {
+                    msg.what = Constant.DISMIIS_DIALOG;
+                    msg.HandleMessageToTargetUnrecycle();
+                    if(msg.obj == null){
+                        msg.what = Constant.REGISTER_FAILD_CODE;
+                        msg.HandleMessageToTarget();
+                    } else {
+                        msg.what = Constant.REGISTER_SUCCUSE_CODE;
+                        msg.HandleMessageToTarget();
+                    }
+                })
+        );
+    }
+
+
+    public Message registerImpl(Message msg){
+        return utils.post(msg, Constant.API_ADDRESS+"/api/register",User.class);
+    }
+
 }

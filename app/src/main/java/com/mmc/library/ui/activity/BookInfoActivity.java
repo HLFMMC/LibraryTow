@@ -106,7 +106,7 @@ public class BookInfoActivity  extends BaseActivity<BookPresenters> implements L
                 LoadFailed();
                 break;
             case Constant.LOAD_BOOK_SUCCUSE_CODE:
-                LoadSuccese(msg);
+                LoadSuccuse(msg);
                 break;
         }
     }
@@ -126,7 +126,7 @@ public class BookInfoActivity  extends BaseActivity<BookPresenters> implements L
      * @param msg
      */
     @Override
-    public void LoadSuccese(Message msg) {
+    public void LoadSuccuse(Message msg) {
         BookInfo bookInfo = (BookInfo) msg.obj;
         book_info_bookDesc.setText(bookInfo.getBook().getDesc());
         book_info_bookName.setText(bookInfo.getBook().getName());

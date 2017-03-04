@@ -1,19 +1,17 @@
 package com.mmc.library.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.mmc.library.R;
 import com.mmc.library.adapter.BookAdapter;
 import com.mmc.library.base.BaseActivity;
 import com.mmc.library.bean.Book;
-import com.mmc.library.ui.presenters.MainPresenters;
-import com.mmc.library.ui.presenters.MyBookPresenters;
+import com.mmc.library.ui.presenters.BookPresenters;
 import com.mmc.library.ui.presenters.base.Message;
 import com.mmc.library.ui.view.LoadView;
 import com.mmc.library.utils.Constant;
@@ -28,7 +26,7 @@ import butterknife.OnItemClick;
  * Created by luxingwen on 2017/3/2.
  */
 
-public class MyBookActivity extends BaseActivity<MyBookPresenters> implements LoadView {
+public class MyBookActivity extends BaseActivity<BookPresenters> implements LoadView {
     private BookAdapter adapter;
     private ArrayList<Book> dataList;
     @BindView(R.id.myBookListView)
@@ -53,15 +51,14 @@ public class MyBookActivity extends BaseActivity<MyBookPresenters> implements Lo
     @Override
     protected void initData() {
         setSupportActionBar(toolbar);
-        dataList=new ArrayList<Book>();
-        adapter=new BookAdapter(MyBookActivity.this,dataList);
-        myBookListView.setAdapter(adapter);
-        mPresenter.loadMyBookList(com.mmc.library.ui.presenters.base.Message.obtain(this,user.getToken(),user.getToken()));
+        dataList=new ArrayList<>();
+        pdg = ProgressDialog.show(this,"","加载我的图书中。。。");
+        mPresenter.loadMyBookList(Message.obtainStr(this,user.getToken()));
     }
 
     @Override
-    protected MyBookPresenters getPresenter() {
-        return new MyBookPresenters();
+    protected BookPresenters getPresenter() {
+        return new BookPresenters();
     }
 
     @Override
@@ -71,17 +68,21 @@ public class MyBookActivity extends BaseActivity<MyBookPresenters> implements Lo
 
     @Override
     public void LoadSuccuse(String str) {
-        List<Book> res=new Gson().fromJson(str,new TypeToken<ArrayList<Book>>(){}.getType());
-        if(res.size()>0){
-            dataList.clear();
-        }
-        dataList.addAll(res);
-        adapter.notifyDataSetChanged();
+
     }
 
     @Override
-    public void LoadSuccese(Message msg) {
-
+    public void LoadSuccuse(Message msg) {
+        Log.e("tag","here");
+        List<Book> res = (ArrayList<Book>)msg.obj;
+        if(res.size() == 0) {
+            showMessage("没有图书");
+            return;
+        }
+        dataList.clear();
+        dataList.addAll(res);
+        adapter = new BookAdapter(MyBookActivity.this,dataList);
+        myBookListView.setAdapter(adapter);
     }
 
     @Override
@@ -89,9 +90,11 @@ public class MyBookActivity extends BaseActivity<MyBookPresenters> implements Lo
 
     }
 
+    ProgressDialog pdg = null;
     @Override
     public void dismissDialog() {
-
+        if(pdg != null)
+            pdg.dismiss();
     }
 
     @Override
@@ -102,12 +105,14 @@ public class MyBookActivity extends BaseActivity<MyBookPresenters> implements Lo
     @Override
     public void handleMessage(Message message) {
         switch (message.what) {
-
+            case Constant.DISMIIS_DIALOG:
+                dismissDialog();
+                break;
             case Constant.LOAD_BOOK_FAILD_CODE:
                 LoadFailed();
                 break;
             case Constant.LOAD_BOOK_SUCCUSE_CODE:
-                LoadSuccuse((String)message.obj);
+                LoadSuccuse(message);
                 break;
             case Constant.LOAD_BOOK_FINISH:
                 LoadFinish();

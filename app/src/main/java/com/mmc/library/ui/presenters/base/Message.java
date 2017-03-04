@@ -202,6 +202,13 @@ public final class Message implements Parcelable {
         return m;
     }
 
+    public static Message obtainStr(BaseView v,String str) {
+        Message m = obtain();
+        m.target = v;
+        m.str = str;
+        return m;
+    }
+
     public static Message obtain(BaseView v, Object[] objs) {
         Message m = obtain();
         m.target = v;
@@ -296,7 +303,6 @@ public final class Message implements Parcelable {
         m.arg2 = arg2;
         return m;
     }
-
 
     public static Message obtain(BaseView v,String str,String str1) {
         Message m = obtain();

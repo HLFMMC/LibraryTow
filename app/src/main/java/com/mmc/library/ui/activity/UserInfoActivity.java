@@ -1,12 +1,9 @@
 package com.mmc.library.ui.activity;
 
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.mmc.library.R;
 import com.mmc.library.base.BaseActivity;
 import com.mmc.library.ui.presenters.UserInfoPresenters;
@@ -75,7 +72,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoPresenters> implement
     }
 
     @Override
-    public void LoadSuccese(Message msg) {
+    public void LoadSuccuse(Message msg) {
 
     }
 

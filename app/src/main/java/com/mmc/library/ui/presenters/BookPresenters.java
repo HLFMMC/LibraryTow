@@ -1,12 +1,11 @@
 package com.mmc.library.ui.presenters;
 
+import com.mmc.library.bean.Book;
 import com.mmc.library.bean.BookInfo;
 import com.mmc.library.ui.presenters.base.BasePresenter;
 import com.mmc.library.ui.presenters.base.Message;
 import com.mmc.library.utils.Constant;
 import com.mmc.library.utils.utils;
-
-import java.io.IOException;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,7 +17,16 @@ import rx.schedulers.Schedulers;
 
 public class BookPresenters extends BasePresenter {
 
+    private utils<Book> utils;
 
+    public BookPresenters(){
+        utils = new utils<>();
+    }
+
+    /**
+     * 获取图书详情
+     * @param message
+     */
     public void LoadBookInfo(Message message){
         addSubscrebe(Observable.just(message)
                 .filter(msg -> msg != null)
@@ -40,9 +48,68 @@ public class BookPresenters extends BasePresenter {
     }
 
     private Message LoadBookInfoImpl(Message msg){
+            Message getMsg = utils.get(Constant.API_ADDRESS+"/api/book/info/"+String.valueOf(msg.arg1), BookInfo.class);
+            msg.obj = getMsg.obj;
+        return msg;
+    }
+
+    /**
+     * 获取图书列表
+     * @param message
+     */
+    public void loadBookList(Message message){
+        addSubscrebe(Observable.just(message)
+                .filter(msg -> msg != null)
+                .map(msg -> loadBookImpl(msg))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(msg -> {
+                    if(msg.obj == null){
+                        msg.what = Constant.LOAD_BOOK_FAILD_CODE;
+                        msg.HandleMessageToTarget();
+                    } else {
+                        msg.what = Constant.LOAD_BOOK_SUCCUSE_CODE;
+                        msg.HandleMessageToTarget();
+                    }
+                })
+        );
+    }
+
+    private Message loadBookImpl(Message msg){
+            Message getMsg = utils.getOfList(Constant.API_ADDRESS+"/api/books",Book.class);
+            msg.obj = getMsg.obj;
+        return msg;
+    }
+
+    /**
+     * 获取我购买的图书列表
+     * @param message
+     */
+    public void loadMyBookList(Message message){
+        addSubscrebe(Observable.just(message)
+                .filter(msg -> msg != null)
+                .map(msg -> loadMyBooksImpl(msg))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(msg -> {
+                    msg.what = Constant.DISMIIS_DIALOG;
+                    msg.HandleMessageToTargetUnrecycle();
+                    if(msg.obj == null){
+                        msg.what = Constant.LOAD_BOOK_FAILD_CODE;
+                        msg.HandleMessageToTarget();
+                    } else {
+                        msg.what = Constant.LOAD_BOOK_SUCCUSE_CODE;
+                        msg.HandleMessageToTarget();
+                    }
+                })
+        );
+    }
+
+    private Message loadMyBooksImpl(Message msg){
         try {
-            utils.get(msg,Constant.API_ADDRESS+"/api/book/info/"+String.valueOf(msg.arg1), BookInfo.class);
-        } catch (IOException e) {
+            Message getMsg = utils.getOfList(Constant.API_ADDRESS+"/api/mybook",msg.str,Book.class);
+            msg.obj = getMsg.obj;
+        }catch (Exception e){
             e.printStackTrace();
         }
         return msg;
