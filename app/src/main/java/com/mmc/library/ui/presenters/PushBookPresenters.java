@@ -1,9 +1,6 @@
 package com.mmc.library.ui.presenters;
 
-import com.mmc.library.bean.Book;
 import com.mmc.library.bean.Pic;
-import com.mmc.library.bean.Result;
-import com.mmc.library.bean.User;
 import com.mmc.library.ui.presenters.base.BasePresenter;
 import com.mmc.library.ui.presenters.base.Message;
 import com.mmc.library.utils.Constant;
@@ -43,7 +40,6 @@ public class PushBookPresenters extends BasePresenter {
 
 
     public Message postFileImpl(Message msg){
-        //= =
         utils utils = new utils();
         try {
             return utils.postFile(msg, Constant.API_ADDRESS+"/api/file2",msg.str1,msg.str, Pic.class);

@@ -12,12 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.mmc.library.R;
 import com.mmc.library.adapter.BookAdapter;
 import com.mmc.library.base.BaseActivity;
 import com.mmc.library.bean.Book;
+import com.mmc.library.bean.User;
 import com.mmc.library.ui.presenters.BookPresenters;
 import com.mmc.library.ui.presenters.MainPresenters;
 import com.mmc.library.ui.presenters.base.Message;
@@ -52,6 +53,11 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
             FloatingActionButton main_fab;
     @OnClick(R.id.main_fab)
     void showFAB(){
+        User user = (User)cache.getAsObject(Constant.LOGIN_USER_CACHE_KEY);
+        if(user == null) {
+            Toast.makeText(context, "请先登录！", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(MainActivity.this,PushBookActivity.class);
         startActivity(intent);
     }

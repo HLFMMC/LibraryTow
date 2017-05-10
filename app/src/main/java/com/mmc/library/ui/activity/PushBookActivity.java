@@ -2,8 +2,6 @@ package com.mmc.library.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -18,7 +16,6 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 
-
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.mmc.library.R;
@@ -29,19 +26,16 @@ import com.mmc.library.ui.presenters.PushBookPresenters;
 import com.mmc.library.ui.presenters.base.Message;
 import com.mmc.library.ui.view.LoadView;
 import com.mmc.library.utils.Constant;
-import com.mmc.library.utils.utils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.MediaType;
 
 /**
  * Created by HM on 2017/2/28.
@@ -57,24 +51,28 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
     EditText edt_bookDesc;
     @BindView(R.id.btn_File)
     Button btn_File;
+
     @OnClick(R.id.btn_File)
-    void choseimg(){
+    void choseimg() {
         showPopueWindow();
 
     }
+
     @BindView(R.id.edt_bookPrice)
     EditText edt_bookPrice;
     @BindView(R.id.btn_Push)
     Button btn_Push;
+
     @OnClick(R.id.btn_Push)
-   void pushbook(){
-        Book book=new Book();
+    void pushbook() {
+        Book book = new Book();
         book.setName(edt_bookName.getText().toString());
         book.setDesc(edt_bookDesc.getText().toString());
         book.setPic(edt_bookPic.getText().toString());
         book.setMoney(Float.parseFloat(edt_bookPrice.getText().toString()));
-        mPresenter.pushbook(Message.obtain(this,user.getToken(),book));
+        mPresenter.pushbook(Message.obtain(this, user.getToken(), book));
     }
+
     @BindView(R.id.edt_bookPic)
     EditText edt_bookPic;
 
@@ -94,8 +92,6 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
         return new PushBookPresenters();
     }
 
-
-
     /**
      * 选择文件
      */
@@ -110,7 +106,7 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
     /**
      * 上传文件的方法
      */
-    private void  uploadPic(){
+    private void uploadPic() {
 //        上传图片
 
     }
@@ -129,31 +125,32 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
 
     /**
      * 保存信息方法
+     *
      * @param bookName
      * @param bookDesc
      * @param bookPic
      * @param bookPrice
      * @return
      */
-    private boolean saveBookInfo(String bookName,String bookDesc,String bookPic,String bookPrice) {
+    private boolean saveBookInfo(String bookName, String bookDesc, String bookPic, String bookPrice) {
         boolean flag = false;
-        return  true;
+        return true;
     }
 
-    private final static int RESULT_LOAD_IMAGE=1;
-    private final static int RESULT_CAMERA_IMAGE=2;
+    private final static int RESULT_LOAD_IMAGE = 1;
+    private final static int RESULT_CAMERA_IMAGE = 2;
 
-    private void showPopueWindow(){
-        View popView = View.inflate(this,R.layout.popupwindow_camera_need,null);
+    private void showPopueWindow() {
+        View popView = View.inflate(this, R.layout.popupwindow_camera_need, null);
         Button bt_album = (Button) popView.findViewById(R.id.btn_pop_album);
         Button bt_camera = (Button) popView.findViewById(R.id.btn_pop_camera);
         Button bt_cancle = (Button) popView.findViewById(R.id.btn_pop_cancel);
         //获取屏幕宽高
         int weight = getResources().getDisplayMetrics().widthPixels;
-        int height = getResources().getDisplayMetrics().heightPixels*1/3;
+        int height = getResources().getDisplayMetrics().heightPixels * 1 / 3;
 
-        final PopupWindow popupWindow = new PopupWindow(popView,weight,height);
-       // popupWindow.setAnimationStyle(R.style.anim_popup_dir);
+        final PopupWindow popupWindow = new PopupWindow(popView, weight, height);
+        // popupWindow.setAnimationStyle(R.style.anim_popup_dir);
         popupWindow.setFocusable(true);
         //点击外部popueWindow消失
         popupWindow.setOutsideTouchable(true);
@@ -161,8 +158,10 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
         bt_album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                Intent intent = new Intent(Intent.ACTION_PICK, null);
+                intent.setDataAndType(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, RESULT_LOAD_IMAGE);
                 popupWindow.dismiss();
 
             }
@@ -195,9 +194,10 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = 0.5f;
         getWindow().setAttributes(lp);
-        popupWindow.showAtLocation(popView, Gravity.BOTTOM,0,50);
+        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0, 50);
 
     }
+
     private void takeCamera(int num) {
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -216,31 +216,36 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
         startActivityForResult(takePictureIntent, num);//跳转界面传回拍照所得数据
     }
 
+    public void go_crop_pic(Uri uri) {
+        //裁剪
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 250);
+        intent.putExtra("outputY", 250);
+        intent.putExtra("outputFormat", "JPEG");// 图片格式
+        intent.putExtra("noFaceDetection", true);// 取消人脸识别
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, 10);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK ) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == RESULT_LOAD_IMAGE && null != data) {
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                Cursor cursor = getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                final String picturePath = cursor.getString(columnIndex);
-                upload(picturePath);
-                cursor.close();
-            }else if (requestCode == RESULT_CAMERA_IMAGE){
+                go_crop_pic(data.getData());
+            } else if (requestCode == RESULT_CAMERA_IMAGE) {
 
                 SimpleTarget target = new SimpleTarget<Bitmap>() {
 
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        Log.d("onResourceReady--->","");
-                        upload(saveMyBitmap(resource).getAbsolutePath());
+                        Log.d("onResourceReady--->", "");
+//                        upload(saveMyBitmap(resource).getAbsolutePath());
                     }
 
                     @Override
@@ -263,15 +268,63 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
 //                        .centerCrop()
 //                        .dontAnimate()
 //                        .into(target);
+            } else if (requestCode == 10) {
+                Bitmap bb = data.getExtras().getParcelable("data");
+                String endName = String.valueOf(new Date().getTime()) + ".png";
+                saveBitmap(getExternalCacheDir().getPath(), endName, bb, 100, true);
+                upload(getExternalCacheDir().getPath() + "/" + endName);
+            }
+        }
+    }
 
+    public static void saveBitmap(String dirpath, String filename, Bitmap bitmap, int display, boolean isDelete) {
+        File dir = new File(dirpath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(dirpath, filename);
+        // 若存在即删除-默认只保留一张
+        if (isDelete) {
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("create" + e);
+                e.printStackTrace();
+            }
+        }
 
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(file);
+            if (bitmap.compress(Bitmap.CompressFormat.PNG, display, out)) {
+                out.flush();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("" + e);
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("" + e);
+            e.printStackTrace();
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    System.out.println("tiw" + e);
+                    e.printStackTrace();
+                }
             }
         }
     }
 
 
     //将bitmap转化为png格式
-    public File saveMyBitmap(Bitmap mBitmap){
+    public File saveMyBitmap(Bitmap mBitmap) {
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
         File file = null;
         try {
@@ -281,18 +334,19 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
                     storageDir      /* directory */
             );
 
-            FileOutputStream out=new FileOutputStream(file);
+            FileOutputStream out = new FileOutputStream(file);
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 20, out);
             out.flush();
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d("saveMyBitmap--->",file.getAbsolutePath());
-        return  file;
+        Log.d("saveMyBitmap--->", file.getAbsolutePath());
+        return file;
     }
 
     private String mCurrentPhotoPath;
+
     private File createImageFile() {
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
         File image = null;
@@ -340,7 +394,7 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
 
     @Override
     public void dismissDialog() {
-        if(pdg != null)
+        if (pdg != null)
             pdg.dismiss();
     }
 
@@ -351,25 +405,26 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
 
     @Override
     public void handleMessage(Message message) {
-        switch (message.what){
+        switch (message.what) {
             case Constant.DISMIIS_DIALOG:
                 dismissDialog();
-                Pic pic=new Pic();
-                pic=(Pic)message.obj;
+                Pic pic = new Pic();
+                pic = (Pic) message.obj;
                 edt_bookPic.setText(pic.getSrc());
                 break;
-//            case Constant.REGISTER_FAILD_CODE:
-//               ／／ showMessage("");
-//                break;
+            case Constant.REGISTER_FAILD_CODE:
+                showMessage("failed");
+                break;
+            case Constant.REGISTER_SUCCUSE_CODE:
+                showMessage("ok");
+                break;
         }
     }
 
     private void upload(String picturePath) {
-        pdg = ProgressDialog.show(this,"","正在上传图片。。。");
-       mPresenter.postFile(Message.obtain(this,user.getToken(),picturePath));
+        pdg = ProgressDialog.show(this, "", "正在上传图片。。。");
+        mPresenter.postFile(Message.obtain(this, user.getToken(), picturePath));
     }
-
-
 
 
 }
