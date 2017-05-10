@@ -5,7 +5,8 @@ package com.mmc.library.utils;
  */
 
 public interface Constant {
-    String API_ADDRESS = "http://139.199.160.234:8000";
+   // String API_ADDRESS = "http://139.199.160.234:8000";
+   String API_ADDRESS = "http://10.0.3.2:8000";
     //login
     int LOGIN_FAILD_CODE = 0x0001;
     int LOGIN_SUCCUSE_CODE = 0x0002;

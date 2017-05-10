@@ -1,14 +1,19 @@
 package com.mmc.library.utils;
 
+import android.util.Log;
+
 import com.mmc.library.App;
 import com.mmc.library.bean.Result;
 import com.mmc.library.ui.presenters.base.Message;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import okhttp3.Call;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -201,6 +206,40 @@ public class utils<T>{
                 return msg;
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        msg.obj = null;
+        return msg;
+    }
+
+
+    public Message postFile(Message msg, String url, String imgPath, String token, Class<?> cls)throws IOException{
+        MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+        OkHttpClient client = new OkHttpClient();
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        File f = new File(imgPath);
+        builder.addFormDataPart("file", f.getName(), RequestBody.create(MEDIA_TYPE_PNG, f));
+
+        final MultipartBody requestBody = builder.build();
+        //构建请求
+        Log.d("postFile---->",url+" token---:"+token+"imgPath--->:"+imgPath);
+        final Request request = new Request.Builder()
+                .url(url+"?token="+token)//地址
+                .post(requestBody)//添加请求体
+                .build();
+
+        try{
+            Response response=client.newCall(request).execute();
+            if(response != null) {
+                String result = response.body().string();
+                Type type = TypeBuilder.newInstance(Result.class)
+                        .addTypeParam(cls)
+                        .build();
+                Result<T> result1 = App.getInstance().getGson().fromJson(result,type);
+                msg.obj = result1.data;
+                return msg;
+            }
+        }catch (IOException e) {
             e.printStackTrace();
         }
         msg.obj = null;

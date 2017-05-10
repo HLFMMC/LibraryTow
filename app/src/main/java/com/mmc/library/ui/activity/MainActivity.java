@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
     private BookAdapter adapter;
     private ArrayList<Book> dataList;
 
+
     @BindView(R.id.main_bookList)
             ListView main_bookList;
     @OnItemClick(R.id.main_bookList)
@@ -46,8 +48,6 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
         intent.putExtras(mbundle);
         startActivity(intent);
     }
-    @BindView(R.id.main_category)
-            Spinner main_category;
     @BindView(R.id.main_fab)
             FloatingActionButton main_fab;
     @OnClick(R.id.main_fab)
@@ -56,8 +56,14 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
         startActivity(intent);
     }
 
+    @BindView(R.id.editSearchBook)
+    EditText editSearchBook;
     @BindView(R.id.main_searchBtn)
     Button main_searchBtn;
+    @OnClick(R.id.main_searchBtn)
+    void searchbooks(){
+        LoadAllBook();
+    }
     @BindView(R.id.toolbar)
             Toolbar toolbar;
 
@@ -78,7 +84,13 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
     }
 
     public void LoadAllBook(){
-        bookPresenters.loadBookList(Message.obtain(this));
+        String q="";
+        String name=editSearchBook.getText().toString();
+        if(!name.isEmpty()){
+            q="?q="+name;
+        }
+        Log.d("LoadAllBook--->",q);
+        bookPresenters.loadBookList(Message.obtainStr(this,q));
     }
 
     BookPresenters bookPresenters;
@@ -130,6 +142,11 @@ public class MainActivity extends BaseActivity<MainPresenters> implements LoadVi
         }else if(id==R.id.userInfo){
             if(checkUserIsLogin()){
                 Intent intent = new Intent(MainActivity.this,UserInfoActivity.class);
+                startActivity(intent);
+            }
+        }else if(id==R.id.gouwuche){
+            if(checkUserIsLogin()){
+                Intent intent = new Intent(MainActivity.this,ShopcarActivity.class);
                 startActivity(intent);
             }
         }

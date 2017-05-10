@@ -17,6 +17,7 @@
     android:layout_height="wrap_content"
     android:text="我的图书"
     android:textSize="24dp"
+    android:id="@+id/bookTitle"
     />
     <ListView
         android:layout_width="match_parent"

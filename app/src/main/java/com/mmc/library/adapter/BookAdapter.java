@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mmc.library.R;
 import com.mmc.library.bean.Book;
+import com.mmc.library.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +63,11 @@ public class BookAdapter extends BaseAdapter {
         }
 
         if(mList.get(position).getPic()!=""){
-            Glide.with(mContext).load(mList.get(position).getPic()).centerCrop().placeholder(R.drawable.nocover).crossFade().into(holder.bookCover);
+            String pic=mList.get(position).getPic();
+            if (pic.contains("upload/")){
+                pic= Constant.API_ADDRESS+"/"+pic;
+            }
+            Glide.with(mContext).load(pic).centerCrop().placeholder(R.drawable.nocover).crossFade().into(holder.bookCover);
         }else{
             holder.bookCover.setImageResource(R.drawable.nocover);
         }

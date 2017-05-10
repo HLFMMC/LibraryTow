@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 /**
@@ -38,6 +39,10 @@ public class BookInfoActivity  extends BaseActivity<BookPresenters> implements L
 
     @BindView(R.id.book_info_add_cart)
     Button book_info_add_cart;
+    @OnClick(R.id.book_info_add_cart)
+    void addCart(){
+
+    }
 
     @BindView(R.id.book_info_bookDesc)
     TextView book_info_bookDesc;

@@ -47,10 +47,10 @@
                 android:id="@+id/bookCategory"/>
 
             <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner2"
-                android:background="@drawable/shapeline"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/bookcategorySpinner"
+                android:background="@color/base_color_text_white"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/bookCategory"
                 android:layout_toEndOf="@+id/bookCategory" />

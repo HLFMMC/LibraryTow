@@ -1,5 +1,8 @@
 package com.mmc.library.ui.presenters;
 
+import android.nfc.Tag;
+import android.util.Log;
+
 import com.mmc.library.bean.Book;
 import com.mmc.library.bean.BookInfo;
 import com.mmc.library.ui.presenters.base.BasePresenter;
@@ -76,7 +79,14 @@ public class BookPresenters extends BasePresenter {
     }
 
     private Message loadBookImpl(Message msg){
-            Message getMsg = utils.getOfList(Constant.API_ADDRESS+"/api/books",Book.class);
+        Log.d("loadBookImpl--->",msg.str+":"+msg.str1);
+        if(msg.str==null){
+            msg.str="";
+        }
+        if (msg.str1==null){
+            msg.str1="";
+        }
+            Message getMsg = utils.getOfList(Constant.API_ADDRESS+"/api/books"+msg.str,Book.class);
             msg.obj = getMsg.obj;
         return msg;
     }
