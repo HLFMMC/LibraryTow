@@ -46,14 +46,16 @@
                 android:textColor="@color/base_color_text_white"
                 android:id="@+id/bookCategory"/>
 
-            <Spinner
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:id="@+id/bookcategorySpinner"
-                android:background="@color/base_color_text_white"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/bookCategory"
-                android:layout_toEndOf="@+id/bookCategory" />
+                android:singleLine="true"
+                android:background="@drawable/shapeline"
+                android:id="@+id/edt_bookcategory"
+                android:maxLines="1"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/bookCategory"
+                android:layout_toRightOf="@+id/bookCategory" />
 
         </RelativeLayout>
         <RelativeLayout

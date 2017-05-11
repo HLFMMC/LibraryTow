@@ -10,6 +10,8 @@ import com.mmc.library.ui.presenters.base.Message;
 import com.mmc.library.utils.Constant;
 import com.mmc.library.utils.utils;
 
+import java.util.Map;
+
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -124,4 +126,101 @@ public class BookPresenters extends BasePresenter {
         }
         return msg;
     }
+
+    public void buyBook(Message message){
+        addSubscrebe(Observable.just(message)
+                .filter(msg -> msg != null)
+                .map(msg -> buyBookImpl(msg))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(msg -> {
+                    msg.what = Constant.DISMIIS_DIALOG;
+                    msg.HandleMessageToTargetUnrecycle();
+                    if(msg.obj == null){
+                        msg.what = Constant.LOAD_BOOK_FAILD_CODE;
+                        msg.HandleMessageToTarget();
+                    } else {
+                        msg.what = Constant.LOAD_BOOK_SUCCUSE_CODE;
+                        msg.HandleMessageToTarget();
+                    }
+                })
+        );
+    }
+
+    private Message buyBookImpl(Message msg){
+        try {
+            return utils.post(msg, Constant.API_ADDRESS+"/api/book/buy",msg.str,null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return msg;
+    }
+
+    public void addShopCart(Message message){
+        addSubscrebe(Observable.just(message)
+                .filter(msg -> msg != null)
+                .map(msg -> addShopCartImpl(msg))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(msg -> {
+                    msg.what = Constant.DISMIIS_DIALOG;
+                    msg.HandleMessageToTargetUnrecycle();
+                    if(msg.obj == null){
+                        msg.what = Constant.LOAD_BOOK_FAILD_CODE;
+                        msg.HandleMessageToTarget();
+                    } else {
+                        msg.what = Constant.LOAD_BOOK_SUCCUSE_CODE;
+                        msg.HandleMessageToTarget();
+                    }
+                })
+        );
+    }
+
+    private Message addShopCartImpl(Message msg){
+        try {
+            Map<String,Object> map=( Map<String,Object>)msg.obj;
+            String bookId=map.get("bookId").toString();
+            Log.d("addShopCartImpl--->",bookId);
+            return utils.post(msg, Constant.API_ADDRESS+"/api/shopcar/"+bookId,msg.str,null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return msg;
+    }
+
+    //
+
+    public void replay(Message message){
+        addSubscrebe(Observable.just(message)
+                .filter(msg -> msg != null)
+                .map(msg -> replayImpl(msg))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(msg -> {
+                    msg.what = Constant.DISMIIS_DIALOG;
+                    msg.HandleMessageToTargetUnrecycle();
+                    if(msg.obj == null){
+                        msg.what = Constant.LOAD_BOOK_FAILD_CODE;
+                        msg.HandleMessageToTarget();
+                    } else {
+                        msg.what = Constant.LOAD_BOOK_SUCCUSE_CODE;
+                        msg.HandleMessageToTarget();
+                    }
+                })
+        );
+    }
+
+    private Message replayImpl(Message msg){
+        try {
+            Map<String,Object> map=( Map<String,Object>)msg.obj;
+            String bookId=map.get("bookId").toString();
+
+            Log.d("addShopCartImpl--->",bookId);
+            return utils.post(msg, Constant.API_ADDRESS+"/api/book/info/"+bookId+"/community",msg.str,null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return msg;
+    }
+
 }

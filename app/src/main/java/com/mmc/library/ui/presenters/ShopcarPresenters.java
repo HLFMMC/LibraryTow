@@ -1,5 +1,7 @@
 package com.mmc.library.ui.presenters;
 
+import android.util.Log;
+
 import com.mmc.library.bean.Book;
 import com.mmc.library.ui.presenters.base.BasePresenter;
 import com.mmc.library.ui.presenters.base.Message;
@@ -38,8 +40,9 @@ public class ShopcarPresenters  extends BasePresenter {
     private Message loadShopcarListImpl(Message msg){
         utils utils=new utils();
         try {
-            Message getMsg = utils.getOfList(Constant.API_ADDRESS+"/api/shopcar",Book.class);
+            Message getMsg = utils.getOfList(Constant.API_ADDRESS+"/api/shopcar",msg.str,Book.class);
             msg.obj = getMsg.obj;
+            Log.d("tag","getMsg.obj--->"+getMsg.obj.toString());
         }catch (Exception e){
             e.printStackTrace();
         }

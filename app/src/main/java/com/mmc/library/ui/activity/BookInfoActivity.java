@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.mmc.library.R;
 import com.mmc.library.adapter.BookInfoAdapter;
 import com.mmc.library.base.BaseActivity;
+import com.mmc.library.bean.Book;
 import com.mmc.library.bean.BookInfo;
 import com.mmc.library.bean.Community;
 import com.mmc.library.ui.presenters.BookPresenters;
@@ -20,7 +21,9 @@ import com.mmc.library.ui.view.LoadView;
 import com.mmc.library.utils.Constant;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,7 +44,9 @@ public class BookInfoActivity  extends BaseActivity<BookPresenters> implements L
     Button book_info_add_cart;
     @OnClick(R.id.book_info_add_cart)
     void addCart(){
-
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("bookId",bookId);
+        mPresenter.addShopCart(Message.obtain(this,user.getToken(),map));
     }
 
     @BindView(R.id.book_info_bookDesc)
@@ -63,9 +68,24 @@ public class BookInfoActivity  extends BaseActivity<BookPresenters> implements L
 
     @BindView(R.id.book_info_replayBtn)
     Button book_info_replayBtn;
-
+    @OnClick(R.id.book_info_replayBtn)
+    void replay(){
+        String content=book_info_commit_editText.getText().toString();
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("bookId",bookId);
+        map.put("content",content);
+        mPresenter.replay(Message.obtain(this,user.getToken(),map));
+    }
     @BindView(R.id.book_info_buy)
     Button book_info_buy;
+    @OnClick(R.id.book_info_buy)
+    void buy(){
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("bookId",bookId);
+        mPresenter.buyBook(Message.obtain(this,user.getToken(),map));
+    }
+
+
 
     @BindView(R.id.book_info_commit_editText)
     EditText book_info_commit_editText;
@@ -137,8 +157,12 @@ public class BookInfoActivity  extends BaseActivity<BookPresenters> implements L
         book_info_bookName.setText(bookInfo.getBook().getName());
         book_info_author.setText(bookInfo.getBook().getAutor());
         if(!TextUtils.isEmpty(bookInfo.getBook().getPic())){
-            Glide.with(BookInfoActivity.this)
-                    .load(bookInfo.getBook().getPic())
+            String pic=bookInfo.getBook().getPic();
+            if (pic.contains("upload/")){//判断图片是远程地址还是服务器本地地址
+                pic= Constant.API_ADDRESS+"/"+pic;
+            }
+            Glide.with(BookInfoActivity.this)//使用glide 加载图片 ／／glie 是google的一个加载图片开源库
+                    .load(pic)
                     .centerCrop()
                     .placeholder(R.drawable.nocover)
                     .crossFade().into(book_info_img_cover);

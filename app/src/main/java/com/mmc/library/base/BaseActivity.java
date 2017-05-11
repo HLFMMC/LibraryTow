@@ -42,12 +42,12 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         context = this;
         //设置主要布局
         setContentView(getContentView());
-        //注册ButterKnife
+        //注册ButterKnife// 黄牛刀
         mUnbinder = ButterKnife.bind(this);
-        cache = Cache.get(this);
-        isLogin = checkUserIsLogin();
+        cache = Cache.get(this);//获取缓存
+        isLogin = checkUserIsLogin();//是否已经登录
         //初始化数据
-        this.user=(User)cache.getAsObject(Constant.LOGIN_USER_CACHE_KEY);
+        this.user=(User)cache.getAsObject(Constant.LOGIN_USER_CACHE_KEY);//设置用户信息
         initData();
 
     }

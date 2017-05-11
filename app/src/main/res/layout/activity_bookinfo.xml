@@ -105,7 +105,7 @@
             <Button
                 android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:text="回复"
+                android:text="评论"
                 android:id="@+id/book_info_replayBtn"
                 android:background="@color/color_bottom_text_press"
                 android:textColor="@color/base_color_text_white"

@@ -45,8 +45,9 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
 
     @BindView(R.id.edt_bookName)
     EditText edt_bookName;
-    @BindView(R.id.bookcategorySpinner)
-    Spinner bookcategorySpinner;
+    @BindView(R.id.edt_bookcategory)
+    EditText edt_bookcategory;
+
     @BindView(R.id.edt_bookDesc)
     EditText edt_bookDesc;
     @BindView(R.id.btn_File)
@@ -84,7 +85,7 @@ public class PushBookActivity extends BaseActivity<PushBookPresenters> implement
 
     @Override
     protected void initData() {
-
+        edt_bookcategory.setText("默认类别");
     }
 
     @Override
